@@ -1,4 +1,8 @@
 exports.config = {
-  seleniumAddress: 'http://localhost:4444/wd/hub',
-  specs: ['clothingShopFeature.js']
+
+  specs: ['clothingShopFeature.js'],
+  baseUrl: 'http://localhost:8000/',
+  jasmineNodeOpts: {
+    isVerbose: true,
+  }
 }

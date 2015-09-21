@@ -3,7 +3,7 @@ describe('Clothing Shop Homepage', function() {
   var productList = element.all(by.repeater('product in products'));
 
   beforeEach(function() {
-    browser.get('http://localhost:8080');
+    browser.get('index.html');
   });
 
   it('has a title', function() {
