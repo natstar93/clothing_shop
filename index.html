@@ -13,7 +13,7 @@
   </head>
 
   <body ng-controller="ClothingShopProductsController as productsCtrl">
-    <div>
+    <div class="col-md-9 col-xs-8">
       <div class="col-md-3 col-sm-6 product-container" ng-repeat="product in productsCtrl.products">
         <p class="product-name">
           {{ product.name }}
@@ -27,7 +27,14 @@
         <p class="product-stock">
           {{ product.quantity }} in stock
         </p>
+        <button type="button" class="btn add-btn" ng-click="productsCtrl.addItem(product.name)">Add Item</button>
       </div>
+    </div>
+    <div class="col-md-3 col-xs-4">
+      <h4>Shopping Cart</h4>
+      <p class="ordered-products" ng-repeat="item in productsCtrl.orderedItems">
+        {{ item }}
+      </p>
     </div>
   </body>
 </html>
