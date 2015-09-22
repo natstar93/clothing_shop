@@ -13,26 +13,38 @@
   </head>
 
   <body ng-controller="ClothingShopProductsController as productsCtrl">
-    <div class="col-md-9 col-xs-8">
-      <div class="col-md-3 col-sm-6 product-container" ng-repeat="product in productsCtrl.products">
-        <p class="product-name">
-          {{ product.name }}
-        </p>
-        <p class="product-category">
-          {{ product.category }}
-        </p>
-        <p class="product-price">
-          £{{ product.price.toFixed(2) }}
-        </p>
-        <p class="product-stock">
-          {{ product.quantity }} in stock
-        </p>
-        <button type="button" class="btn add-btn" ng-click="productsCtrl.addItem(product.name)">Add Item</button>
+    <div class="header col-md-12">
+      Awesome Clothing Shop
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-6">
+      <div class="col-lg-3 col-md-4 col-sm-6 product-container" ng-repeat="product in productsCtrl.products">
+        <div class="product-panel">
+          <div class="product-img-container">
+            <img src="http://3.bp.blogspot.com/-WF69ROtjeVY/VEPxv05GYeI/AAAAAAAAA2Q/FUFhWOJj5O8/s1600/portrait_bw.jpg" class="product-img">
+          </div>
+          <div class="product-info">
+            <p class="product-name">
+              {{ product.name }}
+            </p>
+            <p class="product-category">
+              {{ product.category }}
+            </p>
+            <p class="product-price">
+              £{{ product.price.toFixed(2) }}
+            </p>
+            <p class="product-stock">
+              {{ product.quantity }} in stock
+            </p>
+          </div>
+          <div class="product-button">
+            <button type="button" class="btn btn-default add-btn" ng-click="productsCtrl.addItem(product.name)">Add Item</button>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="col-md-3 col-xs-4">
+    <div class="col-md-3 col-sm-4 col-xs-6">
       <h4>Shopping Cart</h4>
-      <p class="ordered-products" ng-repeat="item in productsCtrl.orderedItems">
+      <p class="ordered-products" ng-repeat="item in productsCtrl.orderedItems track by $index">
         {{ item }}
       </p>
     </div>
