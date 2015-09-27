@@ -1,6 +1,7 @@
 describe('Clothing Shop Homepage', function() {
 
-  var productList = element.all(by.repeater('product in products'));
+  var productList = element.all(by.repeater('product in productsCtrl.products'));
+  var orderedItemList = element.all(by.repeater('item in productsCtrl.orderedItems'));
 
   beforeEach(function() {
     browser.get('index.html');
@@ -22,14 +23,29 @@ describe('Clothing Shop Homepage', function() {
   });
 
   describe('shopping cart', function() {
-    it('single product can be added to it', function() {
+
+    beforeEach(function() {
       productList.get(0).element(by.css('.add-btn')).click();
+    });
+
+    it('single product can be added', function() {
       expect(element(by.css('.ordered-products')).getText()).toContain('Almond Toe Court Shoes, Patent Black');
     });
 
-    it('multiple products can be added to it', function() {
+    it('multiple products can be added', function() {
+      productList.get(0).element(by.css('.add-btn')).click();
+      expect(element(by.css('.ordered-products')).getText()).toContain('Almond Toe Court Shoes, Patent Black x 2');
+    });
+
+    it('single product can be removed', function() {
+      orderedItemList.get(0).element(by.css('.decrease-btn')).click();
+      expect(element(by.css('.shopping-cart-container')).getText()).toNotContain('Almond Toe Court Shoes, Patent Black');
+    });
+
+    it('one of multiple products can be removed', function() {
       productList.get(0).element(by.css('.add-btn')).click();
       productList.get(0).element(by.css('.add-btn')).click();
+      orderedItemList.get(0).element(by.css('.decrease-btn')).click();
       expect(element(by.css('.ordered-products')).getText()).toContain('Almond Toe Court Shoes, Patent Black x 2');
     });
   });

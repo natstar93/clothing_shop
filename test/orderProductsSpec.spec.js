@@ -15,4 +15,11 @@ describe('factory: OrderProducts', function() {
       expect(orderProducts.addItem( { "name": "Almond Toe Court Shoes, Patent Black", "category": "Women's Footwear", "price": 99.00, "quantity": 4 } )).toEqual([{ "name" : "Almond Toe Court Shoes, Patent Black", "quantity" : 2 }]);
     });
   });
+
+  describe('removeItem', function() {
+    it('can remove a product', function() {
+      orderProducts.addItem( { "name": "Almond Toe Court Shoes, Patent Black", "category": "Women's Footwear", "price": 99.00, "quantity": 5 } );
+      expect(orderProducts.removeItem( { "name" : "Almond Toe Court Shoes, Patent Black", "quantity" : 1 } )).toEqual([]);
+    });
+  })
 });

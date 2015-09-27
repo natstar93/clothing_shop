@@ -12,4 +12,8 @@ clothingShop.controller('ClothingShopProductsController', ['$scope', '$http', 'O
     this.addItem = function(product) {
       self.orderedItems = orderProducts.addItem(product);
     }
+
+    this.decreaseItem = function(product) {
+      self.orderedItems = orderProducts.removeItem(product);
+    }
 }]);

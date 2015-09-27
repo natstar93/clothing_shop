@@ -43,10 +43,10 @@
         </div>
       </div>
     </div>
-    <div class="col-md-3 col-sm-4 col-xs-6">
+    <div class="col-md-3 col-sm-4 col-xs-6 shopping-cart-container">
       <h4>Shopping Cart</h4>
-      <p class="ordered-products" ng-repeat="item in productsCtrl.orderedItems track by $index">
-        {{ item.name }}<span ng-if="item.quantity > 1"> x {{ item.quantity }}</span>
+      <p class="ordered-products" ng-repeat="item in productsCtrl.orderedItems">
+        {{ item.name }}<span ng-if="item.quantity > 1"> x {{ item.quantity }}</span> <button class="decrease-btn" ng-click="productsCtrl.decreaseItem(item)">-</button>
       </p>
     </div>
   </body>
