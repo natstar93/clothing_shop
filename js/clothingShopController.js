@@ -1,5 +1,5 @@
-clothingShop.controller('ClothingShopProductsController', ['$scope', '$http',
-  function($scope, $http) {
+clothingShop.controller('ClothingShopProductsController', ['$scope', '$http', 'OrderProducts',
+  function($scope, $http, OrderProducts) {
     var self = this;
     $http.get('js/awesomeclothing.json').success(function(data) {
       self.products = data;
@@ -7,9 +7,9 @@ clothingShop.controller('ClothingShopProductsController', ['$scope', '$http',
 
     self.orderedItems = [];
 
+    var orderProducts = OrderProducts;
+
     this.addItem = function(product) {
-      console.log(product);
-      self.orderedItems.push(product);
-      console.log(self.orderedItems);
+      self.orderedItems = orderProducts.addItem(product);
     }
 }]);
