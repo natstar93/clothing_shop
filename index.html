@@ -21,7 +21,7 @@
       <div class="col-lg-3 col-md-4 col-sm-6 product-container" ng-repeat="product in productsCtrl.products">
         <div class="product-panel">
           <div class="product-img-container">
-            <img src="http://3.bp.blogspot.com/-WF69ROtjeVY/VEPxv05GYeI/AAAAAAAAA2Q/FUFhWOJj5O8/s1600/portrait_bw.jpg" class="product-img">
+            <img src="images/mariana.jpg" class="product-img">
           </div>
           <div class="product-info">
             <p class="product-name">
@@ -46,7 +46,7 @@
     <div class="col-md-3 col-sm-4 col-xs-6">
       <h4>Shopping Cart</h4>
       <p class="ordered-products" ng-repeat="item in productsCtrl.orderedItems track by $index">
-        {{ item }}
+        {{ item.name }}<span ng-if="item.quantity > 1"> x {{ item.quantity }}</span>
       </p>
     </div>
   </body>
