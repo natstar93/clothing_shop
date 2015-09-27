@@ -45,9 +45,14 @@
     </div>
     <div class="col-md-3 col-sm-4 col-xs-6 shopping-cart-container">
       <h4>Shopping Cart</h4>
-      <p class="ordered-products" ng-repeat="item in productsCtrl.orderedItems">
-        {{ item.name }}<span ng-if="item.quantity > 1"> x {{ item.quantity }}</span> <button class="decrease-btn" ng-click="productsCtrl.decreaseItem(item)">-</button>
-      </p>
+      <div class="ordered-products" ng-repeat="item in productsCtrl.orderedItems">
+        <p class="ordered-item-name">
+          {{ item.name }}
+        </p>
+        <p class="ordered-item-quantity">
+          Quantity: <button class="decrease-btn" ng-click="productsCtrl.decreaseItem(item)">-</button> {{ item.quantity }} <button class="increase-btn" ng-click="productsCtrl.addItem(item)">+</button>
+        </p>
+      </div>
     </div>
   </body>
 </html>

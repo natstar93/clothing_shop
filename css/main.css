@@ -50,3 +50,15 @@ h4 {
 .product-button {
   padding-bottom: 10px;
 }
+
+.ordered-products {
+  padding-top: 10px;
+}
+
+.ordered-item-name {
+  font-weight: bold;
+}
+
+.ordered-item-quantity {
+  font-size: 0.8em;
+}

@@ -22,7 +22,7 @@ describe('Clothing Shop Homepage', function() {
     expect(productList.get(12).element(by.css('.product-stock')).getText()).toEqual('5 in stock');
   });
 
-  describe('shopping cart', function() {
+  describe('shopping cart items', function() {
 
     beforeEach(function() {
       productList.get(0).element(by.css('.add-btn')).click();
@@ -34,7 +34,12 @@ describe('Clothing Shop Homepage', function() {
 
     it('multiple products can be added', function() {
       productList.get(0).element(by.css('.add-btn')).click();
-      expect(element(by.css('.ordered-products')).getText()).toContain('Almond Toe Court Shoes, Patent Black x 2');
+      expect(element(by.css('.ordered-products')).getText()).toContain('Quantity: - 2 +');
+    });
+
+    it('quantity can be increased', function() {
+      orderedItemList.get(0).element(by.css('.increase-btn')).click();
+      expect(element(by.css('.ordered-products')).getText()).toContain('Quantity: - 2 +');
     });
 
     it('single product can be removed', function() {
@@ -46,7 +51,7 @@ describe('Clothing Shop Homepage', function() {
       productList.get(0).element(by.css('.add-btn')).click();
       productList.get(0).element(by.css('.add-btn')).click();
       orderedItemList.get(0).element(by.css('.decrease-btn')).click();
-      expect(element(by.css('.ordered-products')).getText()).toContain('Almond Toe Court Shoes, Patent Black x 2');
+      expect(element(by.css('.ordered-products')).getText()).toContain('Quantity: - 2 +');
     });
   });
 });
