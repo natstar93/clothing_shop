@@ -3,7 +3,8 @@ clothingShop.controller('ClothingShopProductsController', ['$scope', '$http', 'D
     var self = this;
 
     self.orderedItems = [];
-    self.products = {};
+    self.products = [];
+    self.total = 0;
 
     var orderProducts = OrderProducts;
     var dataService = DataService;
@@ -18,6 +19,7 @@ clothingShop.controller('ClothingShopProductsController', ['$scope', '$http', 'D
 
     this.addItem = function(product) {
       self.orderedItems = orderProducts.addItem(product);
+      self.total = orderProducts.calculateTotal();
     }
 
     this.decreaseItem = function(product) {

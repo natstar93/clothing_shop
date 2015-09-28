@@ -54,6 +54,9 @@
           Quantity: <button class="decrease-btn" ng-click="productsCtrl.decreaseItem(item)">-</button> {{ item.quantity }} <button class="increase-btn" ng-click="productsCtrl.addItem(item)">+</button>
         </p>
       </div>
+      <div class="total-price-panel">
+        Total: <span>{{ productsCtrl.total.toFixed(2) }}</span>
+      </div>
     </div>
   </body>
 </html>

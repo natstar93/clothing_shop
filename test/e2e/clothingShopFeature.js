@@ -54,4 +54,13 @@ describe('Clothing Shop Homepage', function() {
       expect(element(by.css('.ordered-products')).getText()).toContain('Quantity: - 2 +');
     });
   });
+
+  describe('price calculation', function() {
+
+    it('correctly totals item prices', function() {
+      productList.get(0).element(by.css('.add-btn')).click();
+      productList.get(5).element(by.css('.add-btn')).click();
+      expect(element(by.binding('productsCtrl.total.toFixed(2)')).getText()).toEqual('266.00');
+    })
+  })
 });

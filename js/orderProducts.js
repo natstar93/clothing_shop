@@ -10,7 +10,7 @@ clothingShop.factory('OrderProducts', function() {
         return orderedItems;
       }
     }
-    orderedItems.push( { "name" : product.name, "quantity" : 1 } );
+    orderedItems.push( { "name" : product.name, "quantity" : 1, "price" : product.price } );
     return orderedItems;
   };
 
@@ -25,6 +25,14 @@ clothingShop.factory('OrderProducts', function() {
       }
     }
   };
+
+  factory.calculateTotal = function() {
+    var basketTotal = 0;
+    angular.forEach(orderedItems, function(item) {
+      basketTotal += item.price * item.quantity;
+    });
+    return basketTotal;
+  }
 
   return factory;
 });
