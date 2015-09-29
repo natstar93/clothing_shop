@@ -82,4 +82,11 @@ describe('Clothing Shop Homepage', function() {
       expect(element(by.binding('productsCtrl.total.toFixed(2)')).getText()).toEqual('266.00');
     });
   });
+
+  describe('out of stock products', function() {
+
+    it('cannot be ordered', function() {
+      expect(productList.get(4).element(by.css('.add-btn')).getAttribute('disabled')).toBe('true');
+    });
+  })
 });

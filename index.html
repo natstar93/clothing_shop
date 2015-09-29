@@ -39,7 +39,7 @@
             </p>
           </div>
           <div class="product-button">
-            <button type="button" class="btn btn-default add-btn" ng-click="productsCtrl.addItem(product)">Add Item</button>
+            <button type="button" class="btn btn-default add-btn" ng-click="productsCtrl.addItem(product)" ng-disabled="product.quantity < 1">Add Item</button>
           </div>
         </div>
       </div>
