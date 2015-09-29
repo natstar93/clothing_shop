@@ -97,7 +97,14 @@ describe('Clothing Shop Homepage', function() {
         element(by.model('productsCtrl.voucherCode')).sendKeys('AWESOME10OFF');
         element(by.className('voucher-submit-btn')).click();
         expect(element(by.binding('productsCtrl.total.toFixed(2)')).getText()).toEqual('89.00');
-      })
+      });
+
+      it('AWESOME15SHOE takes £15 off total over £75 when footwear ordered', function() {
+        productList.get(0).element(by.css('.add-btn')).click();
+        element(by.model('productsCtrl.voucherCode')).sendKeys('AWESOME15SHOE');
+        element(by.className('voucher-submit-btn')).click();
+        expect(element(by.binding('productsCtrl.total.toFixed(2)')).getText()).toEqual('84.00');
+      });
 
       it('displays error message if code invalid', function() {
         productList.get(0).element(by.css('.add-btn')).click();

@@ -6,17 +6,18 @@ describe('factory: OrderProducts', function() {
     mockProductList = [{ "name": "Almond Toe Court Shoes, Patent Black", "category": "Women's Footwear", "price": 99.00, "quantity": 5 }];
     outOfStockProductList = [{ "name": "Flip Flops, Blue", "category": "Men's Footwear", "price": 19.00, "quantity": 0 }];
     underFiftyProductList = [{ "name": "Flip Flops, Red", "category": "Men's Footwear", "price": 19.00, "quantity": 6 }];
+    overSeventyfiveProductList = [{ "name": "Gold Button Cardigan, Black", "category": "Women's Casualwear", "price": 167.00, "quantity": 6 }];
   }));
 
   describe('can update order list', function() {
 
     it('adds a single product', function() {
-      expect(orderProducts.addItem( { "name": "Almond Toe Court Shoes, Patent Black", "category": "Women's Footwear", "price": 99.00, "quantity": 5 }, mockProductList )['o']).toEqual([{ "name" : "Almond Toe Court Shoes, Patent Black", "quantity" : 1 , "price" : 99.00 }]);
+      expect(orderProducts.addItem( { "name": "Almond Toe Court Shoes, Patent Black", "category": "Women's Footwear", "price": 99.00, "quantity": 5 }, mockProductList )['o']).toEqual([{ "name" : "Almond Toe Court Shoes, Patent Black", "category" : "Women's Footwear", "quantity" : 1 , "price" : 99.00 }]);
     });
 
     it('adds multiple products', function() {
       orderProducts.addItem( { "name": "Almond Toe Court Shoes, Patent Black", "category": "Women's Footwear", "price": 99.00, "quantity": 5 }, mockProductList );
-      expect(orderProducts.addItem( { "name": "Almond Toe Court Shoes, Patent Black", "category": "Women's Footwear", "price": 99.00, "quantity": 4 }, mockProductList )['o']).toEqual([{ "name" : "Almond Toe Court Shoes, Patent Black", "quantity" : 2, "price" : 99.00 }]);
+      expect(orderProducts.addItem( { "name": "Almond Toe Court Shoes, Patent Black", "category": "Women's Footwear", "price": 99.00, "quantity": 4 }, mockProductList )['o']).toEqual([{ "name" : "Almond Toe Court Shoes, Patent Black", "category" : "Women's Footwear", "quantity" : 2, "price" : 99.00 }]);
     });
 
     it('removes a product', function() {
@@ -84,6 +85,21 @@ describe('factory: OrderProducts', function() {
         expect(orderProducts.calculateTotal()).toEqual(19.00);
       });
     });
+
+    describe('£15 off voucher', function() {
+
+      it('applies voucher if total over £75 and >0 items of footwear ordered', function() {
+        orderProducts.addItem( { "name": "Almond Toe Court Shoes, Patent Black", "category": "Women's Footwear", "price": 99.00, "quantity": 5 }, mockProductList );
+        orderProducts.applyVoucher('AWESOME15SHOE');
+        expect(orderProducts.calculateTotal()).toEqual(84.00);
+      });
+
+      it('does not apply voucher if footwear not ordered', function() {
+        orderProducts.addItem( { "name": "Gold Button Cardigan, Black", "category": "Women's Casualwear", "price": 167.00, "quantity": 6 }, overSeventyfiveProductList );
+        orderProducts.applyVoucher('AWESOME15SHOE');
+        expect(orderProducts.calculateTotal()).toEqual(167.00);
+      });
+    })
   });
 
   describe('out of stock products', function() {
