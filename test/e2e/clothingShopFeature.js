@@ -92,6 +92,13 @@ describe('Clothing Shop Homepage', function() {
         expect(element(by.binding('productsCtrl.total.toFixed(2)')).getText()).toEqual('94.00');
       });
 
+      it('AWESOME10OFF takes £10 off total over £50', function() {
+        productList.get(0).element(by.css('.add-btn')).click();
+        element(by.model('productsCtrl.voucherCode')).sendKeys('AWESOME10OFF');
+        element(by.className('voucher-submit-btn')).click();
+        expect(element(by.binding('productsCtrl.total.toFixed(2)')).getText()).toEqual('89.00');
+      })
+
       it('displays error message if code invalid', function() {
         productList.get(0).element(by.css('.add-btn')).click();
         element(by.model('productsCtrl.voucherCode')).sendKeys('WRONG');

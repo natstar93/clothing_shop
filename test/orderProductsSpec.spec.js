@@ -5,6 +5,7 @@ describe('factory: OrderProducts', function() {
     orderProducts = OrderProducts;
     mockProductList = [{ "name": "Almond Toe Court Shoes, Patent Black", "category": "Women's Footwear", "price": 99.00, "quantity": 5 }];
     outOfStockProductList = [{ "name": "Flip Flops, Blue", "category": "Men's Footwear", "price": 19.00, "quantity": 0 }];
+    underFiftyProductList = [{ "name": "Flip Flops, Red", "category": "Men's Footwear", "price": 19.00, "quantity": 6 }];
   }));
 
   describe('can update order list', function() {
@@ -51,21 +52,36 @@ describe('factory: OrderProducts', function() {
         expect(orderProducts.calculateTotal()).toEqual(94.00);
       });
 
-      it('does not apply £5 off voucher if no products ordered', function() {
+      it('does not apply if no products ordered', function() {
         orderProducts.applyVoucher('AWESOME5OFF');
         expect(orderProducts.calculateTotal()).toEqual(0.00);
       });
 
-      it('does not apply £5 off voucher if code entered incorrectly', function() {
+      it('does not apply if code entered incorrectly', function() {
         orderProducts.addItem( { "name": "Almond Toe Court Shoes, Patent Black", "category": "Women's Footwear", "price": 99.00, "quantity": 5 }, mockProductList );
         orderProducts.applyVoucher('WRONG');
         expect(orderProducts.calculateTotal()).toEqual(99.00);
       });
 
-      it('applies £5 off voucher later if no products ordered initially', function() {
+      it('applies voucher later if no products ordered initially', function() {
         orderProducts.applyVoucher('AWESOME5OFF');
         orderProducts.addItem( { "name": "Almond Toe Court Shoes, Patent Black", "category": "Women's Footwear", "price": 99.00, "quantity": 5 }, mockProductList );
         expect(orderProducts.calculateTotal()).toEqual(94.00);
+      });
+    });
+
+    describe('£10 off voucher', function() {
+
+      it('applies voucher if total over £50', function() {
+        orderProducts.addItem( { "name": "Almond Toe Court Shoes, Patent Black", "category": "Women's Footwear", "price": 99.00, "quantity": 5 }, mockProductList );
+        orderProducts.applyVoucher('AWESOME10OFF');
+        expect(orderProducts.calculateTotal()).toEqual(89.00);
+      });
+
+      it('does not apply voucher if total £50 or less', function() {
+        orderProducts.addItem( { "name": "Flip Flops, Red", "category": "Men's Footwear", "price": 19.00, "quantity": 6 }, underFiftyProductList );
+        orderProducts.applyVoucher('AWESOME10OFF');
+        expect(orderProducts.calculateTotal()).toEqual(19.00);
       });
     });
   });
