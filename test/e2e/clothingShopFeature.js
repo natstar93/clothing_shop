@@ -11,18 +11,37 @@ describe('Clothing Shop Homepage', function() {
     expect(browser.getTitle()).toEqual('Awesome Clothing');
   });
 
-  it('displays products', function() {
-    expect(productList.count()).toEqual(13);
+  describe('shop front', function() {
+
+    it('displays products', function() {
+      expect(productList.count()).toEqual(13);
+    });
+
+    it('displays product details', function() {
+      expect(productList.get(0).element(by.css('.product-name')).getText()).toEqual('Almond Toe Court Shoes, Patent Black');
+      expect(productList.get(2).element(by.css('.product-category')).getText()).toEqual('Men\'s Footwear');
+      expect(productList.get(6).element(by.css('.product-price')).getText()).toEqual('£30.00');
+      expect(productList.get(12).element(by.css('.product-stock')).getText()).toEqual('5 in stock');
+    });
+
+    describe('updates stock quantity', function() {
+
+      it('when product is ordered', function() {
+        expect(productList.get(0).element(by.binding('product.quantity')).getText()).toEqual('5');
+        productList.get(0).element(by.css('.add-btn')).click();
+        expect(productList.get(0).element(by.binding('product.quantity')).getText()).toEqual('4');
+      });
+
+      it('when product is removed from basket', function() {
+        productList.get(0).element(by.css('.add-btn')).click();
+        expect(productList.get(0).element(by.binding('product.quantity')).getText()).toEqual('4');
+        orderedItemList.get(0).element(by.css('.decrease-btn')).click();
+        expect(productList.get(0).element(by.binding('product.quantity')).getText()).toEqual('5');
+      });
+    });
   });
 
-  it('displays product details', function() {
-    expect(productList.get(0).element(by.css('.product-name')).getText()).toEqual('Almond Toe Court Shoes, Patent Black');
-    expect(productList.get(2).element(by.css('.product-category')).getText()).toEqual('Men\'s Footwear');
-    expect(productList.get(6).element(by.css('.product-price')).getText()).toEqual('£30.00');
-    expect(productList.get(12).element(by.css('.product-stock')).getText()).toEqual('5 in stock');
-  });
-
-  describe('shopping cart items', function() {
+  describe('shopping cart', function() {
 
     beforeEach(function() {
       productList.get(0).element(by.css('.add-btn')).click();
@@ -61,6 +80,6 @@ describe('Clothing Shop Homepage', function() {
       productList.get(0).element(by.css('.add-btn')).click();
       productList.get(5).element(by.css('.add-btn')).click();
       expect(element(by.binding('productsCtrl.total.toFixed(2)')).getText()).toEqual('266.00');
-    })
-  })
+    });
+  });
 });

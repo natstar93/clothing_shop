@@ -18,11 +18,18 @@ clothingShop.controller('ClothingShopProductsController', ['$scope', '$http', 'D
     }
 
     this.addItem = function(product) {
-      self.orderedItems = orderProducts.addItem(product);
-      self.total = orderProducts.calculateTotal();
+      var returnedLists = orderProducts.addItem(product, self.products);
+      populateLists(returnedLists);
     }
 
     this.decreaseItem = function(product) {
-      self.orderedItems = orderProducts.removeItem(product);
+      var returnedLists = orderProducts.removeItem(product, self.products);
+      populateLists(returnedLists);
+    }
+
+    function populateLists(returnedLists) {
+      self.orderedItems = returnedLists['o'];
+      self.products = returnedLists['p'];
+      self.total = orderProducts.calculateTotal();
     }
 }]);
