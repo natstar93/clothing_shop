@@ -47,8 +47,17 @@ h4 {
   color: #CC99FF;
   font-size: 0.9em;
 }
+
+.message {
+  font-weight: bold;
+}
+
 .product-button {
   padding-bottom: 10px;
+}
+
+.product-button .add-btn {
+  background-color: #ffeeef;
 }
 
 .ordered-products {
