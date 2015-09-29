@@ -79,8 +79,18 @@ describe('Clothing Shop Homepage', function() {
     it('correctly totals item prices', function() {
       productList.get(0).element(by.css('.add-btn')).click();
       productList.get(5).element(by.css('.add-btn')).click();
-      expect(element(by.binding('productsCtrl.total.toFixed(2)')).getText()).toEqual('266.00');
+      expect(element(by.binding('productsCtrl.subtotal.toFixed(2)')).getText()).toEqual('266.00');
     });
+
+    describe('vouchers', function() {
+
+      it('takes £5 off the total', function() {
+        productList.get(0).element(by.css('.add-btn')).click();
+        element(by.model('voucherCode')).sendKeys('AWESOME5OFF');
+        element(by.className('voucher-submit-btn')).click();
+        expect(element(by.binding('productsCtrl.total.toFixed(2)')).getText()).toEqual('94.00');
+      })
+    })
   });
 
   describe('out of stock products', function() {

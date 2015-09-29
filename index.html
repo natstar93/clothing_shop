@@ -54,7 +54,18 @@
           Quantity: <button class="decrease-btn" ng-click="productsCtrl.decreaseItem(item)">-</button> {{ item.quantity }} <button class="increase-btn" ng-click="productsCtrl.addItem(item)" ng-disabled="productsCtrl.isNoMoreStock(item)">+</button>
         </p>
       </div>
-      <div class="total-price-panel">
+      <div class="subtotal-price-panel price-panel">
+        Total: £<span>{{ productsCtrl.subtotal.toFixed(2) }}</span>
+      </div>
+      <div class="voucher-panel">
+        <form role="form" ng-submit="productsCtrl.applyVoucher()" name="voucherForm">
+          <div class="form-group">
+ 	          Voucher code: <input type="text" ng-model="voucherCode">
+          </div>
+          <button type="submit" class="btn btn-default voucher-submit-btn"><span class="glyphicon glyphicon-ok-circle"></span> Submit</button>
+        </form>
+      </div>
+      <div class="total-price-panel price-panel">
         Total: £<span>{{ productsCtrl.total.toFixed(2) }}</span>
       </div>
     </div>

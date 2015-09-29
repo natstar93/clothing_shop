@@ -2,6 +2,7 @@ clothingShop.factory('OrderProducts', function() {
 
   var factory = {};
   var orderedItems = [];
+  var voucherApplied = false;
 
   factory.addItem = function(product, productsList) {
     removeFromStockList(product, productsList);
@@ -55,12 +56,24 @@ clothingShop.factory('OrderProducts', function() {
     productsList[itemPosition].quantity++;
   };
 
-  factory.calculateTotal = function() {
+  factory.calculateSubtotal = function() {
     var basketTotal = 0;
     angular.forEach(orderedItems, function(item) {
       basketTotal += item.price * item.quantity;
     });
     return basketTotal;
+  };
+
+  factory.applyVoucher = function() {
+    voucherApplied = true;
+  };
+
+  factory.calculateTotal = function() {
+    grandTotal = factory.calculateSubtotal();
+    if (voucherApplied && grandTotal > 5) {
+      grandTotal -= 5;
+    }
+    return grandTotal;
   };
 
   factory.isOutOfStock = function(item, productsList) {

@@ -4,6 +4,7 @@ clothingShop.controller('ClothingShopProductsController', ['$scope', '$http', 'D
 
     self.orderedItems = [];
     self.products = [];
+    self.subtotal = 0;
     self.total = 0;
 
     var orderProducts = OrderProducts;
@@ -31,9 +32,15 @@ clothingShop.controller('ClothingShopProductsController', ['$scope', '$http', 'D
       return orderProducts.isOutOfStock(item, self.products);
     }
 
+    this.applyVoucher = function() {
+      orderProducts.applyVoucher();
+      self.total = orderProducts.calculateTotal();
+    }
+
     function populateLists(returnedLists) {
       self.orderedItems = returnedLists['o'];
       self.products = returnedLists['p'];
+      self.subtotal = orderProducts.calculateSubtotal();
       self.total = orderProducts.calculateTotal();
     }
 }]);

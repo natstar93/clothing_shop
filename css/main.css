@@ -72,10 +72,14 @@ h4 {
   font-size: 0.8em;
 }
 
-.total-price-panel {
+.price-panel {
   background-color: #000000;
   color: #ffffff;
   text-align: center;
   margin-top: 30px;
   padding: 5px;
+}
+
+.voucher-panel {
+  padding-top: 10px;
 }
