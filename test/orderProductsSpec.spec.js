@@ -43,21 +43,30 @@ describe('factory: OrderProducts', function() {
       expect(orderProducts.calculateSubtotal()).toEqual(99.00);
     });
 
-    it('applies £5 off voucher', function() {
-      orderProducts.addItem( { "name": "Almond Toe Court Shoes, Patent Black", "category": "Women's Footwear", "price": 99.00, "quantity": 5 }, mockProductList );
-      orderProducts.applyVoucher();
-      expect(orderProducts.calculateTotal()).toEqual(94.00);
-    });
+    describe('£5 off voucher', function() {
 
-    it('does not apply £5 off voucher if no products ordered', function() {
-      orderProducts.applyVoucher();
-      expect(orderProducts.calculateTotal()).toEqual(0.00);
-    });
+      it('applies voucher', function() {
+        orderProducts.addItem( { "name": "Almond Toe Court Shoes, Patent Black", "category": "Women's Footwear", "price": 99.00, "quantity": 5 }, mockProductList );
+        orderProducts.applyVoucher('AWESOME5OFF');
+        expect(orderProducts.calculateTotal()).toEqual(94.00);
+      });
 
-    it('applies £5 off voucher later if no products ordered initially', function() {
-      orderProducts.applyVoucher();
-      orderProducts.addItem( { "name": "Almond Toe Court Shoes, Patent Black", "category": "Women's Footwear", "price": 99.00, "quantity": 5 }, mockProductList );
-      expect(orderProducts.calculateTotal()).toEqual(94.00);
+      it('does not apply £5 off voucher if no products ordered', function() {
+        orderProducts.applyVoucher('AWESOME5OFF');
+        expect(orderProducts.calculateTotal()).toEqual(0.00);
+      });
+
+      it('does not apply £5 off voucher if code entered incorrectly', function() {
+        orderProducts.addItem( { "name": "Almond Toe Court Shoes, Patent Black", "category": "Women's Footwear", "price": 99.00, "quantity": 5 }, mockProductList );
+        orderProducts.applyVoucher('WRONG');
+        expect(orderProducts.calculateTotal()).toEqual(99.00);
+      });
+
+      it('applies £5 off voucher later if no products ordered initially', function() {
+        orderProducts.applyVoucher('AWESOME5OFF');
+        orderProducts.addItem( { "name": "Almond Toe Court Shoes, Patent Black", "category": "Women's Footwear", "price": 99.00, "quantity": 5 }, mockProductList );
+        expect(orderProducts.calculateTotal()).toEqual(94.00);
+      });
     });
   });
 

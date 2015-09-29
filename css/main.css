@@ -83,3 +83,7 @@ h4 {
 .voucher-panel {
   padding-top: 10px;
 }
+
+.voucher-error-msg {
+  color: red;
+}

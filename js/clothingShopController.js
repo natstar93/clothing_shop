@@ -6,6 +6,7 @@ clothingShop.controller('ClothingShopProductsController', ['$scope', '$http', 'D
     self.products = [];
     self.subtotal = 0;
     self.total = 0;
+    this.voucherValid = true;
 
     var orderProducts = OrderProducts;
     var dataService = DataService;
@@ -33,8 +34,9 @@ clothingShop.controller('ClothingShopProductsController', ['$scope', '$http', 'D
     }
 
     this.applyVoucher = function() {
-      orderProducts.applyVoucher();
+      this.voucherValid = orderProducts.applyVoucher(this.voucherCode);
       self.total = orderProducts.calculateTotal();
+      this.voucherCode = '';
     }
 
     function populateLists(returnedLists) {

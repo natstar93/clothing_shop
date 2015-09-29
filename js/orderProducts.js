@@ -2,7 +2,7 @@ clothingShop.factory('OrderProducts', function() {
 
   var factory = {};
   var orderedItems = [];
-  var voucherApplied = false;
+  var fiveOffVoucherApplied = false;
 
   factory.addItem = function(product, productsList) {
     removeFromStockList(product, productsList);
@@ -64,13 +64,19 @@ clothingShop.factory('OrderProducts', function() {
     return basketTotal;
   };
 
-  factory.applyVoucher = function() {
-    voucherApplied = true;
+  factory.applyVoucher = function(voucherCode) {
+    if (voucherCode === 'AWESOME5OFF') {
+      fiveOffVoucherApplied = true;
+      return true;
+    }
+    else {
+      return false;
+    }
   };
 
   factory.calculateTotal = function() {
     grandTotal = factory.calculateSubtotal();
-    if (voucherApplied && grandTotal > 5) {
+    if (fiveOffVoucherApplied && grandTotal > 5) {
       grandTotal -= 5;
     }
     return grandTotal;

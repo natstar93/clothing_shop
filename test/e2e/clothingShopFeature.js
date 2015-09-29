@@ -2,6 +2,7 @@ describe('Clothing Shop Homepage', function() {
 
   var productList = element.all(by.repeater('product in productsCtrl.products'));
   var orderedItemList = element.all(by.repeater('item in productsCtrl.orderedItems'));
+  var voucherList = element.all(by.repeater('voucher in productsCtrl.vouchers'));
 
   beforeEach(function() {
     browser.get('index.html');
@@ -84,12 +85,19 @@ describe('Clothing Shop Homepage', function() {
 
     describe('vouchers', function() {
 
-      it('takes £5 off the total', function() {
+      it('AWESOME5OFF takes £5 off the total', function() {
         productList.get(0).element(by.css('.add-btn')).click();
-        element(by.model('voucherCode')).sendKeys('AWESOME5OFF');
+        element(by.model('productsCtrl.voucherCode')).sendKeys('AWESOME5OFF');
         element(by.className('voucher-submit-btn')).click();
         expect(element(by.binding('productsCtrl.total.toFixed(2)')).getText()).toEqual('94.00');
-      })
+      });
+
+      it('displays error message if code invalid', function() {
+        productList.get(0).element(by.css('.add-btn')).click();
+        element(by.model('productsCtrl.voucherCode')).sendKeys('WRONG');
+        element(by.className('voucher-submit-btn')).click();
+        expect(element(by.css('.voucher-panel')).getText()).toContain('Voucher code invalid');
+      });
     })
   });
 
