@@ -90,6 +90,18 @@ clothingShop.factory('OrderProducts', function() {
     }
   };
 
+  factory.getVoucherMessage = function() {
+    if (fiveOffVoucherApplied) {
+      return 'Voucher applied: £5 off';
+    }
+    else if (tenOffVoucherApplied) {
+      return 'Voucher applied: £10 off orders over £50'
+    }
+    else if (fifteenOffVoucherApplied) {
+      return 'Voucher applied: £15 off orders over £75 which contain items from our footwear range'
+    }
+  };
+
   function isFootwearOrdered() {
     for (var i = 0; i < orderedItems.length; i++) {
       if (orderedItems[i].category === "Women's Footwear" || orderedItems[i].category === "Men's Footwear") {

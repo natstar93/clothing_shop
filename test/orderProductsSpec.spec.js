@@ -45,13 +45,7 @@ describe('factory: OrderProducts', function() {
       expect(orderProducts.calculateSubtotal()).toEqual(99.00);
     });
 
-    describe('£5 off voucher', function() {
-
-      it('applies voucher', function() {
-        orderProducts.addItem( { "name": "Almond Toe Court Shoes, Patent Black", "category": "Women's Footwear", "price": 99.00, "quantity": 5 }, mockProductList );
-        orderProducts.applyVoucher('AWESOME5OFF');
-        expect(orderProducts.calculateTotal()).toEqual(94.00);
-      });
+    describe('vouchers applied', function() {
 
       it('does not apply if no products ordered', function() {
         orderProducts.applyVoucher('AWESOME5OFF');
@@ -64,42 +58,69 @@ describe('factory: OrderProducts', function() {
         expect(orderProducts.calculateTotal()).toEqual(99.00);
       });
 
-      it('applies voucher later if no products ordered initially', function() {
-        orderProducts.applyVoucher('AWESOME5OFF');
-        orderProducts.addItem( { "name": "Almond Toe Court Shoes, Patent Black", "category": "Women's Footwear", "price": 99.00, "quantity": 5 }, mockProductList );
-        expect(orderProducts.calculateTotal()).toEqual(94.00);
+      describe('£5 off', function() {
+
+        it('applies discount', function() {
+          orderProducts.addItem( { "name": "Almond Toe Court Shoes, Patent Black", "category": "Women's Footwear", "price": 99.00, "quantity": 5 }, mockProductList );
+          orderProducts.applyVoucher('AWESOME5OFF');
+          expect(orderProducts.calculateTotal()).toEqual(94.00);
+        });
+
+        it('applies voucher later if no products ordered initially', function() {
+          orderProducts.applyVoucher('AWESOME5OFF');
+          orderProducts.addItem( { "name": "Almond Toe Court Shoes, Patent Black", "category": "Women's Footwear", "price": 99.00, "quantity": 5 }, mockProductList );
+          expect(orderProducts.calculateTotal()).toEqual(94.00);
+        });
+
+        it('displays discount message', function() {
+          orderProducts.addItem( { "name": "Almond Toe Court Shoes, Patent Black", "category": "Women's Footwear", "price": 99.00, "quantity": 5 }, mockProductList );
+          orderProducts.applyVoucher('AWESOME5OFF');
+          expect(orderProducts.getVoucherMessage()).toEqual('Voucher applied: £5 off');
+        });
+      });
+
+      describe('£10 off voucher', function() {
+
+        it('applies voucher if total over £50', function() {
+          orderProducts.addItem( { "name": "Almond Toe Court Shoes, Patent Black", "category": "Women's Footwear", "price": 99.00, "quantity": 5 }, mockProductList );
+          orderProducts.applyVoucher('AWESOME10OFF');
+          expect(orderProducts.calculateTotal()).toEqual(89.00);
+        });
+
+        it('does not apply voucher if total £50 or less', function() {
+          orderProducts.addItem( { "name": "Flip Flops, Red", "category": "Men's Footwear", "price": 19.00, "quantity": 6 }, underFiftyProductList );
+          orderProducts.applyVoucher('AWESOME10OFF');
+          expect(orderProducts.calculateTotal()).toEqual(19.00);
+        });
+
+        it('displays discount message', function() {
+          orderProducts.addItem( { "name": "Almond Toe Court Shoes, Patent Black", "category": "Women's Footwear", "price": 99.00, "quantity": 5 }, mockProductList );
+          orderProducts.applyVoucher('AWESOME10OFF');
+          expect(orderProducts.getVoucherMessage()).toEqual('Voucher applied: £10 off orders over £50');
+        });
+      });
+
+      describe('£15 off voucher', function() {
+
+        it('applies voucher if total over £75 and >0 items of footwear ordered', function() {
+          orderProducts.addItem( { "name": "Almond Toe Court Shoes, Patent Black", "category": "Women's Footwear", "price": 99.00, "quantity": 5 }, mockProductList );
+          orderProducts.applyVoucher('AWESOME15SHOE');
+          expect(orderProducts.calculateTotal()).toEqual(84.00);
+        });
+
+        it('does not apply voucher if footwear not ordered', function() {
+          orderProducts.addItem( { "name": "Gold Button Cardigan, Black", "category": "Women's Casualwear", "price": 167.00, "quantity": 6 }, overSeventyfiveProductList );
+          orderProducts.applyVoucher('AWESOME15SHOE');
+          expect(orderProducts.calculateTotal()).toEqual(167.00);
+        });
+
+        it('displays discount message', function() {
+          orderProducts.addItem( { "name": "Almond Toe Court Shoes, Patent Black", "category": "Women's Footwear", "price": 99.00, "quantity": 5 }, mockProductList );
+          orderProducts.applyVoucher('AWESOME15SHOE');
+          expect(orderProducts.getVoucherMessage()).toEqual('Voucher applied: £15 off orders over £75 which contain items from our footwear range');
+        });
       });
     });
-
-    describe('£10 off voucher', function() {
-
-      it('applies voucher if total over £50', function() {
-        orderProducts.addItem( { "name": "Almond Toe Court Shoes, Patent Black", "category": "Women's Footwear", "price": 99.00, "quantity": 5 }, mockProductList );
-        orderProducts.applyVoucher('AWESOME10OFF');
-        expect(orderProducts.calculateTotal()).toEqual(89.00);
-      });
-
-      it('does not apply voucher if total £50 or less', function() {
-        orderProducts.addItem( { "name": "Flip Flops, Red", "category": "Men's Footwear", "price": 19.00, "quantity": 6 }, underFiftyProductList );
-        orderProducts.applyVoucher('AWESOME10OFF');
-        expect(orderProducts.calculateTotal()).toEqual(19.00);
-      });
-    });
-
-    describe('£15 off voucher', function() {
-
-      it('applies voucher if total over £75 and >0 items of footwear ordered', function() {
-        orderProducts.addItem( { "name": "Almond Toe Court Shoes, Patent Black", "category": "Women's Footwear", "price": 99.00, "quantity": 5 }, mockProductList );
-        orderProducts.applyVoucher('AWESOME15SHOE');
-        expect(orderProducts.calculateTotal()).toEqual(84.00);
-      });
-
-      it('does not apply voucher if footwear not ordered', function() {
-        orderProducts.addItem( { "name": "Gold Button Cardigan, Black", "category": "Women's Casualwear", "price": 167.00, "quantity": 6 }, overSeventyfiveProductList );
-        orderProducts.applyVoucher('AWESOME15SHOE');
-        expect(orderProducts.calculateTotal()).toEqual(167.00);
-      });
-    })
   });
 
   describe('out of stock products', function() {

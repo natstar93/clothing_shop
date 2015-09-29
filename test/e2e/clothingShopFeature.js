@@ -90,6 +90,7 @@ describe('Clothing Shop Homepage', function() {
         element(by.model('productsCtrl.voucherCode')).sendKeys('AWESOME5OFF');
         element(by.className('voucher-submit-btn')).click();
         expect(element(by.binding('productsCtrl.total.toFixed(2)')).getText()).toEqual('94.00');
+        expect(element(by.css('.current-discount')).getText()).toEqual('Voucher applied: £5 off');
       });
 
       it('AWESOME10OFF takes £10 off total over £50', function() {
@@ -97,6 +98,7 @@ describe('Clothing Shop Homepage', function() {
         element(by.model('productsCtrl.voucherCode')).sendKeys('AWESOME10OFF');
         element(by.className('voucher-submit-btn')).click();
         expect(element(by.binding('productsCtrl.total.toFixed(2)')).getText()).toEqual('89.00');
+        expect(element(by.css('.current-discount')).getText()).toEqual('Voucher applied: £10 off orders over £50');
       });
 
       it('AWESOME15SHOE takes £15 off total over £75 when footwear ordered', function() {
@@ -104,6 +106,7 @@ describe('Clothing Shop Homepage', function() {
         element(by.model('productsCtrl.voucherCode')).sendKeys('AWESOME15SHOE');
         element(by.className('voucher-submit-btn')).click();
         expect(element(by.binding('productsCtrl.total.toFixed(2)')).getText()).toEqual('84.00');
+        expect(element(by.css('.current-discount')).getText()).toEqual('Voucher applied: £15 off orders over £75 which contain items from our footwear range');
       });
 
       it('displays error message if code invalid', function() {

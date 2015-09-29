@@ -6,7 +6,7 @@ clothingShop.controller('ClothingShopProductsController', ['$scope', '$http', 'D
     self.products = [];
     self.subtotal = 0;
     self.total = 0;
-    this.voucherValid = true;
+    self.voucherValid = true;
 
     var orderProducts = OrderProducts;
     var dataService = DataService;
@@ -19,24 +19,28 @@ clothingShop.controller('ClothingShopProductsController', ['$scope', '$http', 'D
       });
     }
 
-    this.addItem = function(product) {
+    self.addItem = function(product) {
       var returnedLists = orderProducts.addItem(product, self.products);
       populateLists(returnedLists);
     }
 
-    this.decreaseItem = function(product) {
+    self.decreaseItem = function(product) {
       var returnedLists = orderProducts.removeItem(product, self.products);
       populateLists(returnedLists);
     }
 
-    this.isNoMoreStock = function(item) {
+    self.isNoMoreStock = function(item) {
       return orderProducts.isOutOfStock(item, self.products);
     }
 
-    this.applyVoucher = function() {
-      this.voucherValid = orderProducts.applyVoucher(this.voucherCode);
+    self.applyVoucher = function() {
+      self.voucherValid = orderProducts.applyVoucher(self.voucherCode);
       self.total = orderProducts.calculateTotal();
-      this.voucherCode = '';
+      self.voucherCode = '';
+    }
+
+    self.currentDiscount = function() {
+      return orderProducts.getVoucherMessage();
     }
 
     function populateLists(returnedLists) {
