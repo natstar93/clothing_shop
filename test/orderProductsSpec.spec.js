@@ -4,6 +4,7 @@ describe('factory: OrderProducts', function() {
   beforeEach(inject(function(OrderProducts) {
     orderProducts = OrderProducts;
     mockProductList = [{ "name": "Almond Toe Court Shoes, Patent Black", "category": "Women's Footwear", "price": 99.00, "quantity": 5 }];
+    outOfStockProductList = [{ "name": "Flip Flops, Blue", "category": "Men's Footwear", "price": 19.00, "quantity": 0 }];
   }));
 
   describe('can update order list', function() {
@@ -36,9 +37,17 @@ describe('factory: OrderProducts', function() {
   });
 
   describe('calculateTotal', function() {
+
     it('sums an order', function() {
       orderProducts.addItem( { "name": "Almond Toe Court Shoes, Patent Black", "category": "Women's Footwear", "price": 99.00, "quantity": 5 }, mockProductList );
       expect(orderProducts.calculateTotal()).toEqual(99.00);
+    })
+  });
+
+  describe('out of stock products', function() {
+
+    it('knows if item is out of stock', function() {
+      expect(orderProducts.isOutOfStock({ "name": "Flip Flops, Blue", "category": "Men's Footwear", "price": 19.00, "quantity": 0 }, outOfStockProductList)).toBe(true);
     })
   })
 });

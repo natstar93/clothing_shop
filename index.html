@@ -51,7 +51,7 @@
           {{ item.name }}
         </p>
         <p class="ordered-item-quantity">
-          Quantity: <button class="decrease-btn" ng-click="productsCtrl.decreaseItem(item)">-</button> {{ item.quantity }} <button class="increase-btn" ng-click="productsCtrl.addItem(item)">+</button>
+          Quantity: <button class="decrease-btn" ng-click="productsCtrl.decreaseItem(item)">-</button> {{ item.quantity }} <button class="increase-btn" ng-click="productsCtrl.addItem(item)" ng-disabled="productsCtrl.isNoMoreStock(item)">+</button>
         </p>
       </div>
       <div class="total-price-panel">

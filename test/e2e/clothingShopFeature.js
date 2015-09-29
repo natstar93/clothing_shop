@@ -88,5 +88,10 @@ describe('Clothing Shop Homepage', function() {
     it('cannot be ordered', function() {
       expect(productList.get(4).element(by.css('.add-btn')).getAttribute('disabled')).toBe('true');
     });
+
+    it('cannot be incremented', function() {
+      productList.get(10).element(by.css('.add-btn')).click();
+      expect(orderedItemList.get(0).element(by.css('.increase-btn')).getAttribute('disabled')).toBe('true');
+    })
   })
 });

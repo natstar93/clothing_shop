@@ -63,5 +63,10 @@ clothingShop.factory('OrderProducts', function() {
     return basketTotal;
   };
 
+  factory.isOutOfStock = function(item, productsList) {
+    var itemPosition = findItem(item, productsList);
+    return (productsList[itemPosition].quantity < 1);
+  }
+
   return factory;
 });

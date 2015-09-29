@@ -27,6 +27,10 @@ clothingShop.controller('ClothingShopProductsController', ['$scope', '$http', 'D
       populateLists(returnedLists);
     }
 
+    this.isNoMoreStock = function(item) {
+      return orderProducts.isOutOfStock(item, self.products);
+    }
+
     function populateLists(returnedLists) {
       self.orderedItems = returnedLists['o'];
       self.products = returnedLists['p'];
