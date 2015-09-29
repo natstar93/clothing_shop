@@ -2,45 +2,57 @@ clothingShop.factory('OrderProducts', function() {
 
   var factory = {};
   var orderedItems = [];
-  //var availableProducts = [];
 
   factory.addItem = function(product, productsList) {
-   var firstOfProduct = true;
-    for (var i = 0; i < productsList.length; i++) {
-      if (productsList[i].name === product.name) {
-        productsList[i].quantity--;
-      }
-    }
+    removeFromStockList(product, productsList);
+    addToOrder(product);
+    return { 'o' : orderedItems,
+             'p' : productsList };
+  };
 
-    for (var i = 0; i < orderedItems.length; i++) {
-      if (orderedItems[i].name === product.name) {
-        firstOfProduct = false;
-        orderedItems[i].quantity ++;
-      }
+  function removeFromStockList(product, productsList) {
+    var itemPosition = findItem(product, productsList);
+    productsList[itemPosition].quantity--;
+  };
+
+  function addToOrder(product) {
+    var itemPosition = findItem(product, orderedItems);
+    if (itemPosition > -1) {
+      orderedItems[itemPosition].quantity ++;
     }
-    if (firstOfProduct) {
+    else {
       orderedItems.push( { "name" : product.name, "quantity" : 1, "price" : product.price } );
     }
+  };
+
+  factory.removeItem = function(item, productsList) {
+    removeFromOrder(item);
+    incremementStockList(item, productsList);
+
     return {'o' : orderedItems,
             'p' : productsList};
   };
 
-  factory.removeItem = function(item, productsList) {
-    for (var i = 0; i < orderedItems.length; i++) {
-      if (orderedItems[i].name === item.name) {
-        orderedItems[i].quantity --;
-        if (orderedItems[i].quantity === 0) {
-          orderedItems.splice(i, 1);
-        }
+  function removeFromOrder(item) {
+    var itemPosition = findItem(item, orderedItems);
+    orderedItems[itemPosition].quantity--;
+    if (orderedItems[itemPosition].quantity === 0) {
+      orderedItems.splice(itemPosition, 1);
+    }
+  };
+
+  function findItem(item, list) {
+    for (var i = 0; i < list.length; i++) {
+      if (list[i].name === item.name) {
+        return i;
       }
     }
-    for (var i = 0; i < productsList.length; i++) {
-      if (productsList[i].name === item.name) {
-        productsList[i].quantity++;
-      }
-    }
-    return {'o' : orderedItems,
-            'p' : productsList};
+    return -1;
+  }
+
+  function incremementStockList(item, productsList) {
+    var itemPosition = findItem(item, productsList);
+    productsList[itemPosition].quantity++;
   };
 
   factory.calculateTotal = function() {
@@ -49,7 +61,7 @@ clothingShop.factory('OrderProducts', function() {
       basketTotal += item.price * item.quantity;
     });
     return basketTotal;
-  }
+  };
 
   return factory;
 });
