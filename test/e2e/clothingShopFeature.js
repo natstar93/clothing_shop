@@ -124,6 +124,10 @@ describe('Clothing Shop Homepage', function() {
       expect(productList.get(4).element(by.css('.add-btn')).getAttribute('disabled')).toBe('true');
     });
 
+    it('display out of stock message', function() {
+      expect(productList.get(4).element(by.css('.product-stock')).getText()).toContain('Sorry, no more in stock');
+    })
+
     it('cannot be incremented', function() {
       productList.get(10).element(by.css('.add-btn')).click();
       expect(orderedItemList.get(0).element(by.css('.increase-btn')).getAttribute('disabled')).toBe('true');

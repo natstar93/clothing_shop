@@ -34,8 +34,8 @@
             <p class="product-price">
               £{{ product.price.toFixed(2) }}
             </p>
-            <p class="product-stock" ng-class="{ 'message': product.quantity < 1 }">
-              <span>{{ product.quantity }}</span> in stock
+            <p class="product-stock" ng-class="{ 'message': product.quantity === 0 }">
+              <span ng-show="product.quantity > 0">{{ product.quantity }}</span><span ng-show="product.quantity === 0">Sorry, no more</span> in stock
             </p>
           </div>
           <div class="product-button">
@@ -60,7 +60,7 @@
       <div class="voucher-panel">
         <form role="form" ng-submit="productsCtrl.applyVoucher()" name="voucherForm">
           <div class="form-group">
- 	          Voucher code: <input type="text" ng-model="productsCtrl.voucherCode">
+            Voucher code: <input type="text" ng-model="productsCtrl.voucherCode">
           </div>
           <p class='voucher-error-msg' ng-hide="productsCtrl.voucherValid">Voucher code invalid</p>
           <button type="submit" class="btn btn-default voucher-submit-btn"><span class="glyphicon glyphicon-ok-circle"></span> Submit</button>
