@@ -5,6 +5,7 @@ clothingShop.factory('OrderProducts', function() {
   var fiveOffVoucherApplied = false;
   var tenOffVoucherApplied = false;
   var fifteenOffVoucherApplied = false;
+  var footwearInBasket = false;
 
   factory.addItem = function(product, productsList) {
     removeFromStockList(product, productsList);
@@ -79,7 +80,7 @@ clothingShop.factory('OrderProducts', function() {
       fifteenOffVoucherApplied = false;
       return true;
     }
-    else if ((voucherCode === 'AWESOME15SHOE') && isFootwearOrdered()) {
+    else if ((voucherCode === 'AWESOME15SHOE')) {
       fifteenOffVoucherApplied = true;
       tenOffVoucherApplied = false;
       fiveOffVoucherApplied = false;
@@ -97,28 +98,30 @@ clothingShop.factory('OrderProducts', function() {
     else if (tenOffVoucherApplied) {
       return 'Voucher applied: £10 off orders over £50'
     }
-    else if (fifteenOffVoucherApplied) {
+    else if (fifteenOffVoucherApplied && footwearInBasket) {
       return 'Voucher applied: £15 off orders over £75 which contain items from our footwear range'
     }
   };
 
   function isFootwearOrdered() {
+    footwearInBasket = false;
     for (var i = 0; i < orderedItems.length; i++) {
       if (orderedItems[i].category === "Women's Footwear" || orderedItems[i].category === "Men's Footwear") {
-        return true;
+        footwearInBasket = true;
       }
     }
   }
 
   factory.calculateTotal = function() {
     grandTotal = factory.calculateSubtotal();
+    isFootwearOrdered();
     if (fiveOffVoucherApplied && grandTotal > 5) {
       grandTotal -= 5;
     }
     if(tenOffVoucherApplied && grandTotal > 50) {
       grandTotal -= 10;
     }
-    if(fifteenOffVoucherApplied && grandTotal > 75) {
+    if(fifteenOffVoucherApplied && footwearInBasket && grandTotal > 75) {
       grandTotal -= 15;
     }
     return grandTotal;

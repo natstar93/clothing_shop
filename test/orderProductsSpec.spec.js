@@ -114,9 +114,18 @@ describe('factory: OrderProducts', function() {
           expect(orderProducts.calculateTotal()).toEqual(167.00);
         });
 
+        it('removes voucher if footwear removed', function() {
+          orderProducts.addItem( { "name": "Almond Toe Court Shoes, Patent Black", "category": "Women's Footwear", "price": 99.00, "quantity": 5 }, mockProductList );
+          orderProducts.addItem( { "name": "Gold Button Cardigan, Black", "category": "Women's Casualwear", "price": 167.00, "quantity": 6 }, overSeventyfiveProductList );
+          orderProducts.applyVoucher('AWESOME15SHOE');
+          orderProducts.removeItem( { "name": "Almond Toe Court Shoes, Patent Black", "price": 99.00 }, mockProductList);
+          expect(orderProducts.calculateTotal()).toEqual(167.00);
+        });
+
         it('displays discount message', function() {
           orderProducts.addItem( { "name": "Almond Toe Court Shoes, Patent Black", "category": "Women's Footwear", "price": 99.00, "quantity": 5 }, mockProductList );
           orderProducts.applyVoucher('AWESOME15SHOE');
+          orderProducts.calculateTotal();
           expect(orderProducts.getVoucherMessage()).toEqual('Voucher applied: £15 off orders over £75 which contain items from our footwear range');
         });
       });
