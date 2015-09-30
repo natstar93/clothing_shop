@@ -25,6 +25,8 @@ h4 {
 
 .product-img-container {
   padding: 10px 0;
+  background-color: #eeeeee;
+  text-align: center;
 }
 
 .product-img {

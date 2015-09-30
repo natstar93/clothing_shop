@@ -22,7 +22,7 @@
       <div class="col-lg-3 col-md-4 col-sm-6 product-container" ng-repeat="product in productsCtrl.products">
         <div class="product-panel">
           <div class="product-img-container">
-            <img src="images/mariana.jpg" class="product-img">
+            <img ng-src="{{ product.thumbnail }}" class="product-img">
           </div>
           <div class="product-info">
             <p class="product-name">
@@ -39,7 +39,7 @@
             </p>
           </div>
           <div class="product-button">
-            <button type="button" class="btn btn-default add-btn" ng-click="productsCtrl.addItem(product)" ng-disabled="product.quantity < 1">Add Item</button>
+            <button type="button" class="btn btn-default add-btn" ng-click="productsCtrl.addItem(product)" ng-disabled="product.quantity < 1">Add to basket</button>
           </div>
         </div>
       </div>
@@ -63,7 +63,7 @@
             Voucher code: <input type="text" ng-model="productsCtrl.voucherCode">
           </div>
           <p class='voucher-error-msg' ng-hide="productsCtrl.voucherValid">Voucher code invalid</p>
-          <button type="submit" class="btn btn-default voucher-submit-btn"><span class="glyphicon glyphicon-ok-circle"></span> Submit</button>
+          <button type="submit" class="btn btn-default voucher-submit-btn"><span class="glyphicon glyphicon-ok-circle"></span> Submit voucher</button>
         </form>
         <div ng-show="productsCtrl.currentDiscount()">
           <p class="current-discount">
