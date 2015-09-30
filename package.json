@@ -19,5 +19,9 @@
   },
   "dependencies": {
     "http-server": "^0.8.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/natstar93/clothing_shop"
   }
 }
