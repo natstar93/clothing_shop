@@ -34,7 +34,8 @@ clothingShop.controller('ClothingShopProductsController', ['$scope', '$http', 'D
     }
 
     self.applyVoucher = function() {
-      self.voucherValid = orderProducts.applyVoucher(self.voucherCode);
+      self.voucherValid = orderProducts.isVoucherValid(self.voucherCode);
+      orderProducts.applyVoucher(self.voucherCode);
       self.total = orderProducts.calculateTotal();
       self.voucherCode = '';
     }
