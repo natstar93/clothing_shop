@@ -2,6 +2,8 @@
 Clothing Shop
 =================
 
+[View app on Heroku](https://awesome-clothing.herokuapp.com)
+
 ![](/images/awesome-shop.png)
 
 ## Task
@@ -92,3 +94,5 @@ Type **karma start test/karma.conf.js** into terminal
 * Refactor payment and voucher logic into a separate service.
 * Enhance mobile experience by hiding the shopping basket on small devices. This would be achieved by implementing a single column layout with a side menu (basket) that would be shown by tapping a basket icon in the header area.
 * Replace bootstrap buttons with custom button images.
+
+[View app on Heroku](https://awesome-clothing.herokuapp.com)
